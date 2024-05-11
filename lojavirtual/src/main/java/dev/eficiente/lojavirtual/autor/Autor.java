@@ -4,11 +4,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.springframework.util.Assert;
 
 import java.time.Instant;
 
 @Entity
 public class Autor {
+    
+    public static final int MAX_LENGTH_DESCRICAO = 512;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,8 +25,15 @@ public class Autor {
 
     }
 
-    public Autor(Long id, String nome, String email, String descricao) {
-        this.id = id;
+    public Autor(String nome, String email, String descricao) {
+        Assert.hasLength(nome, "Nome e obrigatorio");
+        Assert.hasLength(email, "Email e obrigatorio");
+        Assert.hasLength(descricao, "Descricao e obrigatorio");
+
+        if(descricao.length() > MAX_LENGTH_DESCRICAO) {
+            throw new IllegalArgumentException("Descricao deve conter no maximo "+MAX_LENGTH_DESCRICAO+" caracteres");
+        }
+
         this.nome = nome;
         this.email = email;
         this.descricao = descricao;

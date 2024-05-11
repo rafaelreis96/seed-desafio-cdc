@@ -43,7 +43,7 @@ public class AutorRequestDto implements Serializable {
     }
 
     public Autor toModel() {
-       return new Autor(null, nome, email, descricao);
+       return new Autor(nome, email, descricao);
     }
 
     @Override
