@@ -1,6 +1,6 @@
 package dev.eficiente.lojavirtual.autor;
 
-import dev.eficiente.lojavirtual.validator.emailunico.EmailUnico;
+import dev.eficiente.lojavirtual.validator.uniquevalue.UniqueValue;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
@@ -13,7 +13,7 @@ public class AutorRequestDto implements Serializable {
     private String nome;
 
     @Email
-    @EmailUnico
+    @UniqueValue(fieldClass = Autor.class, fieldName = "email")
     private String email;
 
     @NotBlank

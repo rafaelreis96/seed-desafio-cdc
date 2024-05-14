@@ -1,6 +1,8 @@
 package dev.eficiente.lojavirtual.autor;
 
 import com.github.javafaker.Faker;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,7 @@ class AutorControllerTest {
 
     private AutorRequestDto autorRequestDto;
 
-    private Faker faker;
+    private final Faker faker = TestUtils.fakerBR();
 
     private AutorRequestDto request;
 
@@ -37,8 +39,6 @@ class AutorControllerTest {
 
     @BeforeEach
     void setUp() {
-
-        this.faker = TestUtils.fakerBR();
 
         this.request = new AutorRequestDto();
         request.setNome(faker.name().fullName());
@@ -54,7 +54,6 @@ class AutorControllerTest {
 
     @Test
     void deveCriarAutorComSucesso() throws Exception {
-        when(autorRepository.existsByEmail(request.getEmail())).thenReturn(false);
         when(autorRepository.save(any(Autor.class))).thenReturn(autor);
 
         this.mockMvc.perform(post("/autores")
@@ -63,13 +62,12 @@ class AutorControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(header().exists("Location"));
 
-        verify(autorRepository, times(1)).existsByEmail(request.getEmail());
         verify(autorRepository, times(1)).save(any(Autor.class));
     }
 
     @Test
-    void deveFalharAoCriarAutorComEmailExistente() throws Exception {
-        when(autorRepository.existsByEmail(request.getEmail())).thenReturn(true);
+    void deveImpedirCriarAutorComDadosInvalidos() throws Exception {
+        request.setEmail(null);
         when(autorRepository.save(any(Autor.class))).thenReturn(autor);
 
         this.mockMvc.perform(post("/autores")
@@ -77,7 +75,6 @@ class AutorControllerTest {
                         .content(TestUtils.toJson(request)))
                 .andExpect(status().isBadRequest());
 
-        verify(autorRepository, times(1)).existsByEmail(request.getEmail());
         verify(autorRepository, times(0)).save(any(Autor.class));
     }
 

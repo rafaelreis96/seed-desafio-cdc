@@ -37,7 +37,7 @@ public class ErrorHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> serverError(Exception e) {
         String requestUrl = webRequest.getDescription(false);
-        var response = new ErrorResponse(HttpStatus.NOT_FOUND.value(), MSG_SERVER_ERROR, requestUrl, List.of());
+        var response = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), MSG_SERVER_ERROR, requestUrl, List.of());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
