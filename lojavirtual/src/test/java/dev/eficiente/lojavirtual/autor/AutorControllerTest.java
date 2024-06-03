@@ -1,8 +1,6 @@
 package dev.eficiente.lojavirtual.autor;
 
 import com.github.javafaker.Faker;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

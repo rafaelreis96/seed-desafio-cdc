@@ -15,6 +15,9 @@ public class Categoria {
     @Column(length = MAX_LENGTH_NOME)
     private String nome;
 
+    public Categoria() {
+    }
+
     public Categoria(String nome) {
         Assert.hasLength(nome, "Nome e obrigatório");
 
