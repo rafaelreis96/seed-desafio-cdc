@@ -5,7 +5,8 @@ import dev.eficiente.lojavirtual.autor.Autor;
 import java.math.BigDecimal;
 
 public class DetalheLivroResponseDto {
-    private Autor auto;
+    private Long id;
+    private Autor autor;
     private String titulo;
     private String isbn;
     private int numeroPaginas;
@@ -14,7 +15,8 @@ public class DetalheLivroResponseDto {
     private String sumario;
 
     public DetalheLivroResponseDto(Livro livro) {
-        this.auto = livro.getAutor();
+        this.id = livro.getId();
+        this.autor = livro.getAutor();
         this.titulo = livro.getTitulo();
         this.isbn = livro.getIsbn();
         this.numeroPaginas = livro.getPaginas();
@@ -23,12 +25,20 @@ public class DetalheLivroResponseDto {
         this.sumario = livro.getSumario();
     }
 
-    public Autor getAuto() {
-        return auto;
+    public Long getId() {
+        return id;
     }
 
-    public void setAuto(Autor auto) {
-        this.auto = auto;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Autor getAutor() {
+        return autor;
+    }
+
+    public void setAutor(Autor autor) {
+        this.autor = autor;
     }
 
     public String getTitulo() {
@@ -82,7 +92,8 @@ public class DetalheLivroResponseDto {
     @Override
     public String toString() {
         return "DetalheLivroResponseDto{" +
-                "auto=" + auto +
+                "id=" + id +
+                ", auto=" + autor +
                 ", titulo='" + titulo + '\'' +
                 ", isbn='" + isbn + '\'' +
                 ", numeroPaginas=" + numeroPaginas +
