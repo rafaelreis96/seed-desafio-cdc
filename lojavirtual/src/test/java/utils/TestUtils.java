@@ -11,12 +11,14 @@ import java.util.Locale;
  */
 public class TestUtils {
 
+    static final ObjectMapper objectMapper = new ObjectMapper();
+    static final Faker faker = Faker.instance(new Locale("pt-BR"));
+
     public static Faker fakerBR() {
-        return Faker.instance(new Locale("pt-BR"));
+        return faker;
     }
 
     public static String toJson(Object object) {
-        ObjectMapper objectMapper = new ObjectMapper();
         try {
             return objectMapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
@@ -25,7 +27,6 @@ public class TestUtils {
     }
 
     public static <T> T toObject(String json, Class<T> t) {
-        ObjectMapper objectMapper = new ObjectMapper();
         try {
             return objectMapper.readValue(json, t);
         } catch (JsonProcessingException e) {
